@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="entity.Profesor" table="profesor">
+		<id column="Id" name="id" type="integer">
+			<generator class="increment" />
+		</id>
+
+		<component name="nombre">
+			<property name="nombre" />
+			<property name="ape1" />
+			<property name="ape2" />
+		</component>
+
+		<property name="tipoFuncionario">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">entity.TipoFuncionario</param>
+				<param name="type">4</param>
+			</type>
+		</property>
+
+		<list name="correoElectronico" cascade="all" inverse="false">
+			<key>
+				<column name="idProfesor" />
+			</key>
+			<list-index>
+				<column name="idx" />
+			</list-index>
+			<one-to-many class="entity.CorreoElectronico" />
+		</list>
+		
+<!-- 	 <sql-insert>INSERT INTO Profesor (Nombre,Ape1,Ape2,TipoFuncionario,Id) VALUES (?,?,?,?,?)</sql-insert> -->
+<!--      <sql-update>UPDATE Profesor SET Nombre=?,Ape1=?,Ape2=?, TipoFuncionario=? WHERE Id=? </sql-update> -->
+<!--      <sql-delete>DELETE FROM Profesor WHERE Id=?</sql-delete> -->
+		
+		
+	</class>
+
+
+	<query name="encuentraTodosProfesores"><![CDATA[SELECT p FROM Profesor p]]></query>
+</hibernate-mapping>
